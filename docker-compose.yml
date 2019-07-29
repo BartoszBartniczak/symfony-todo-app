@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:9
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      todo-app-network:
+
+  php:
+    build: docker/php-fpm
+    links:
+      - postgres
+    volumes:
+      - ./:/app
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+    working_dir: /app
+    networks:
+      todo-app-network:
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    volumes:
+      - ./:/app
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./docker/nginx/logs:/var/log/nginx
+    networks:
+      todo-app-network:
+        ipv4_address: 172.93.0.10
+        aliases:
+          - schimbvalutar.test
+          - admin.schimbvalutar.test
+
+volumes:
+  pg_data:
+
+
+networks:
+  todo-app-network:
+    ipam:
+      config:
+        - subnet: 172.93.0.0/24

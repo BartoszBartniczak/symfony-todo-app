@@ -1,0 +1,11 @@
+nelmio_api_doc:
+  documentation:
+    info:
+      title: TODO Symfony app API
+      description: This is just a demo API, for Angular + Symfony application
+      version: 1.0.0
+  areas: # to filter documented areas
+    path_patterns:
+      - ^/(?!/doc$) # Accepts routes under /api except /api/doc
+  models: { use_jms: false }
+
