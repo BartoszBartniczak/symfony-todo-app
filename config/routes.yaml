@@ -1,14 +1,19 @@
 tasks:
     path: /tasks
-    controller: App\Controller\TaskController::posts
+    controller: App\Controller\TaskController::tasks
     methods: GET
 
 createTask:
     path: /tasks
-    controller: App\Controller\TaskController:createPost
+    controller: App\Controller\TaskController:createTask
     methods: POST
 
 updateTask:
     path: /tasks/{uuid}
-    controller: App\Controller\TaskController:updatePost
+    controller: App\Controller\TaskController:updateTask
     methods: PUT
+
+task:
+    path: /tasks/{uuid}
+    controller: App\Controller\TaskController:task
+    methods: [GET]

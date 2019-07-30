@@ -30,7 +30,7 @@ class TaskController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function posts(): JsonResponse
+    public function tasks(): JsonResponse
     {
         $postRepository = $this->getDoctrine()->getRepository(Task::class);
 
@@ -54,7 +54,7 @@ class TaskController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function createPost(Request $request): JsonResponse
+    public function createTask(Request $request): JsonResponse
     {
         $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
@@ -93,7 +93,7 @@ class TaskController extends AbstractController
      * @param string $uuid
      * @return JsonResponse
      */
-    public function updatePost(Request $request, string $uuid): JsonResponse
+    public function updateTask(Request $request, string $uuid): JsonResponse
     {
         $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
@@ -103,11 +103,44 @@ class TaskController extends AbstractController
             return $this->json(null, Response::HTTP_NO_CONTENT);
         }
 
-        $task->setTitle($params['title']);
-        $task->setDescription($params['description']);
+        $task->changeTitle($params['title']);
+        $task->changeDescription($params['description']);
 
         $this->getDoctrine()->getManager()->persist($task);
         $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($task, Response::HTTP_OK);
+    }
+
+    /**
+     * Returns task
+     *
+     * @SWG\Tag(name="Task")
+     *
+     * @SWG\Response(
+     *     response="200",
+     *     description="Returns task",
+     *
+     *     @SWG\Parameter(name="uuid", type="string", format="uuid"),
+     *
+     *     @Model(type="App\Entity\Task")
+     * )
+     *
+     * @SWG\Response(
+     *     response="204",
+     *     description="Task doesnt exist"
+     * )
+     *
+     * @param string $uuid
+     * @return JsonResponse
+     */
+    public function task(string $uuid):JsonResponse
+    {
+        $task = $this->getDoctrine()->getRepository(Task::class)->find($uuid);
+
+        if (!$task instanceof Task) {
+            return $this->json(null, Response::HTTP_NO_CONTENT);
+        }
 
         return $this->json($task, Response::HTTP_OK);
     }
