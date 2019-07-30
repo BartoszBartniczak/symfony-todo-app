@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
@@ -13,10 +14,13 @@ class Task
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="guid")
      *
      * @SWG\Property(type="string", format="uuid", description="User unique ID")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Uuid()
      */
     private $id;
 
@@ -24,11 +28,21 @@ class Task
      * @ORM\Column(type="string", length=255)
      *
      * @SWG\Property(type="string", description="Task title")
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(min="2", max="255")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @SWG\Property(type="string", description="Task description")
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(min="1")
      */
     private $description;
 

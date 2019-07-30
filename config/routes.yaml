@@ -4,6 +4,11 @@ tasks:
     methods: GET
 
 createTask:
-    path: /tasks/{uuid}
+    path: /tasks
     controller: App\Controller\TaskController:createPost
     methods: POST
+
+updateTask:
+    path: /tasks/{uuid}
+    controller: App\Controller\TaskController:updatePost
+    methods: PUT
