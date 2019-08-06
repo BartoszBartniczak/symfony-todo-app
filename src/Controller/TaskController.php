@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Status;
 use App\Entity\Task;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
@@ -34,15 +35,26 @@ class TaskController extends AbstractController
     {
         $postRepository = $this->getDoctrine()->getRepository(Task::class);
 
-        return $this->json(
-            $postRepository->findAll()
-        );
+        return $this->json($postRepository->findAll(), Response::HTTP_OK, [], ['groups' => ['all']]);
     }
 
     /**
      * Creates new task
      *
      * @SWG\Tag(name="Task")
+     *
+     * @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          description="JSON Payload",
+     *          required=true,
+     *          format="application/json",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="title", type="string", example="First job"),
+     *              @SWG\Property(property="description", type="string", example="Job description"),
+     *          )
+     *      ),
      *
      * @SWG\Response(
      *     response=201,
@@ -58,22 +70,40 @@ class TaskController extends AbstractController
     {
         $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
+        $todo = new Status(Status::TO_DO);
+        $todo = $this->getDoctrine()->getManager()->merge($todo);
+        /* @var Status $todo */
+
         $post = new Task(
             Uuid::uuid4(),
             $params['title'] ?? '',
-            $params['description'] ?? ''
+            $params['description'] ?? '',
+            $todo
         );
 
         $this->getDoctrine()->getManager()->persist($post);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($post, Response::HTTP_CREATED);
+        return $this->json($post, Response::HTTP_CREATED, [], ['groups' => 'all']);
     }
 
     /**
      * Updates existing task
      *
      * @SWG\Tag(name="Task")
+     *
+     * @SWG\Parameter(
+     *          name="body",
+     *          in="body",
+     *          description="JSON Payload",
+     *          required=true,
+     *          format="application/json",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(property="title", type="string", example="First job"),
+     *              @SWG\Property(property="description", type="string", example="Job description"),
+     *          )
+     *      ),
      *
      * @SWG\Response(
      *     response="200",
@@ -109,7 +139,7 @@ class TaskController extends AbstractController
         $this->getDoctrine()->getManager()->persist($task);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($task, Response::HTTP_OK);
+        return $this->json($task, Response::HTTP_OK, [], ['groups' => 'all']);
     }
 
     /**
@@ -134,7 +164,7 @@ class TaskController extends AbstractController
      * @param string $uuid
      * @return JsonResponse
      */
-    public function task(string $uuid):JsonResponse
+    public function task(string $uuid): JsonResponse
     {
         $task = $this->getDoctrine()->getRepository(Task::class)->find($uuid);
 
@@ -142,7 +172,7 @@ class TaskController extends AbstractController
             return $this->json(null, Response::HTTP_NO_CONTENT);
         }
 
-        return $this->json($task, Response::HTTP_OK);
+        return $this->json($task, Response::HTTP_OK, [], ['groups' => 'all']);
     }
 
 }

@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Task
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="NONE")
@@ -21,6 +24,8 @@ class Task
      *
      * @Assert\NotBlank()
      * @Assert\Uuid()
+     *
+     * @Groups({"all"})
      */
     private $id;
 
@@ -32,6 +37,8 @@ class Task
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @Assert\Length(min="2", max="255")
+     *
+     * @Groups({"all"})
      */
     private $title;
 
@@ -43,8 +50,22 @@ class Task
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @Assert\Length(min="1")
+     *
+     * @Groups({"all"})
      */
     private $description;
+
+    /**
+     * @var Status
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     *
+     * @SWG\Property(ref=@Model(type=Status::class), description="Status of the task")
+     *
+     * @Groups({"all"})
+     */
+    private $status;
 
     /**
      * Post constructor.
@@ -52,19 +73,21 @@ class Task
      * @param $title
      * @param $description
      */
-    public function __construct($id, $title, $description)
+    public function __construct(string $id, string $title, string $description, Status $status)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
+        $this->status = $status;
     }
 
-    public function getId(): ?string
+    public function getId(): string
     {
         return $this->id;
+
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -76,7 +99,7 @@ class Task
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -87,4 +110,14 @@ class Task
 
         return $this;
     }
+
+    /**
+     * @return Status
+     */
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+
 }
