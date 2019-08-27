@@ -133,8 +133,12 @@ class TaskController extends AbstractController
             return $this->json(null, Response::HTTP_NO_CONTENT);
         }
 
-        $task->changeTitle($params['title']);
-        $task->changeDescription($params['description']);
+        if (isset($params['title'])) {
+            $task->changeTitle($params['title']);
+        }
+        if (isset($params['description'])) {
+            $task->changeDescription($params['description']);
+        }
 
         $this->getDoctrine()->getManager()->persist($task);
         $this->getDoctrine()->getManager()->flush();
@@ -171,6 +175,52 @@ class TaskController extends AbstractController
         if (!$task instanceof Task) {
             return $this->json(null, Response::HTTP_NO_CONTENT);
         }
+
+        return $this->json($task, Response::HTTP_OK, [], ['groups' => 'all']);
+    }
+
+    /**
+     *
+     * @SWG\Tag(name="Task")
+     *
+     * @SWG\Response(
+     *     response="204",
+     *     description="Task doesnt exist"
+     * )
+     *
+     * @SWG\Response(
+     *     response="200",
+     *     description="Changes status of the task",
+     *
+     *     @SWG\Parameter(name="uuid", type="string", format="uuid"),
+     *     @SWG\Parameter(name="newStatusId", type="string"),
+     *
+     *     @Model(type="App\Entity\Task")
+     * )
+     *
+     * @param string $uuid
+     * @param string $newStatusId
+     * @return JsonResponse
+     */
+    public function changeStatus(string $uuid, string $newStatusId): JsonResponse
+    {
+
+        $task = $this->getDoctrine()->getRepository(Task::class)->find($uuid);
+        /* @var Task $task */
+
+        if (!$task instanceof Task) {
+            return $this->json(null, Response::HTTP_NO_CONTENT);
+        }
+
+        $newStatus = new Status($newStatusId);
+        $newStatus = $this->getDoctrine()->getManager()->merge($newStatus);
+        /* @var \App\Entity\Status $newStatus */
+
+        $task->changeStatus($newStatus);
+
+        $this->getDoctrine()->getManager()->persist($task);
+        $this->getDoctrine()->getManager()->flush();
+
 
         return $this->json($task, Response::HTTP_OK, [], ['groups' => 'all']);
     }

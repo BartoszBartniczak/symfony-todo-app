@@ -17,3 +17,8 @@ task:
     path: /tasks/{uuid}
     controller: App\Controller\TaskController:task
     methods: [GET]
+
+changeStatus:
+    path: /tasks/{uuid}/status/{newStatusId}
+    controller: App\Controller\TaskController:changeStatus
+    methods: PUT

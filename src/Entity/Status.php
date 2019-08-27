@@ -52,4 +52,18 @@ class Status
         return $this->id;
     }
 
+    /**
+     * @param self $status
+     *
+     * @return bool
+     */
+    public function canBeChangedOn(self $status):bool{
+        $changeArray = [
+            self::TO_DO => self::IN_PROGRESS,
+            self::IN_PROGRESS => self::DONE
+        ];
+
+        return $changeArray[$this->getId()] === $status->getId();
+    }
+
 }

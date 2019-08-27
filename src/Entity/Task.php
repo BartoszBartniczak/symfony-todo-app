@@ -92,11 +92,9 @@ class Task
         return $this->title;
     }
 
-    public function changeTitle(string $title): self
+    public function changeTitle(string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     public function getDescription(): string
@@ -104,11 +102,9 @@ class Task
         return $this->description;
     }
 
-    public function changeDescription(string $description): self
+    public function changeDescription(string $description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 
     /**
@@ -117,6 +113,16 @@ class Task
     public function getStatus(): Status
     {
         return $this->status;
+    }
+
+    /**
+     * @param Status $status
+     */
+    public function changeStatus(Status $status):void
+    {
+        if ($this->status->canBeChangedOn($status)) {
+            $this->status = $status;
+        }
     }
 
 
