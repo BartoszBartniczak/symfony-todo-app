@@ -1,3 +1,6 @@
+api_login_check:
+    path: /login_check
+
 tasks:
     path: /tasks
     controller: App\Controller\TaskController::tasks

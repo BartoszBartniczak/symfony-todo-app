@@ -8,10 +8,12 @@ This is just an demo app. It is used to be an API for Angular APP.
 * ApiBundleDoc
 * Docker
 * Postgres
-
+* JWT
 
 
 ### Installation
+
+Run `bin/install` to setup the environment.
 
 ### API Docs
 Docs are available at http://todo-api.test/api/doc
