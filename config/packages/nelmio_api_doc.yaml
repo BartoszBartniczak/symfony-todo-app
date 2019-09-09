@@ -4,8 +4,48 @@ nelmio_api_doc:
       title: TODO Symfony app API
       description: This is just a demo API, for Angular + Symfony application
       version: 1.0.0
+
+    paths:
+      /login_check:
+        post:
+          tags:
+            - Login
+          description: Login into the api.
+          produces:
+            - application/json
+          parameters:
+            - name: user
+              description: User to login
+              in: body
+              required: true
+              schema:
+                type: object
+                properties:
+                  _username:
+                    type: string
+                  _password:
+                    type: string
+          responses:
+            '200':
+              description: Login successful
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+            '401':
+              description: Login failed
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
   areas: # to filter documented areas
     path_patterns:
       - ^/(?!/doc$) # Accepts routes under /api except /api/doc
   models: { use_jms: false }
+
+
 
