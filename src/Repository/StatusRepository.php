@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Status;
+use App\Entity\Status\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

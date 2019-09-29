@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Status;
+use App\Entity\Status\Status;
 use App\Entity\Task;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Ramsey\Uuid\Uuid;
@@ -29,7 +29,7 @@ class TaskController extends AbstractController
      *     )
      * )
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function tasks(): JsonResponse
     {
@@ -214,7 +214,7 @@ class TaskController extends AbstractController
 
         $newStatus = new Status($newStatusId);
         $newStatus = $this->getDoctrine()->getManager()->merge($newStatus);
-        /* @var \App\Entity\Status $newStatus */
+        /* @var Status $newStatus */
 
         $task->changeStatus($newStatus);
 

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Status;
 
+use App\Entity\Status\Exception\InvalidState;
+use App\Entity\Status\Exception\UnknownStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -18,6 +20,12 @@ class Status
     const TO_DO = 'TO_DO';
     const IN_PROGRESS = 'IN_PROGRESS';
     const DONE = 'DONE';
+
+    const STATUSES = [
+        self::TO_DO,
+        self::IN_PROGRESS,
+        self::DONE
+    ];
 
     /**
      * Status of the job
@@ -41,6 +49,8 @@ class Status
      */
     public function __construct(string $id)
     {
+        $this->throwExceptionIfStatusUnknown($id);
+
         $this->id = $id;
     }
 
@@ -58,13 +68,29 @@ class Status
      * @return bool
      *
      */
-    public function canBeChangedOn(self $status):bool{
+    public function canBeChangedOn(Status $status): bool
+    {
         $changeArray = [
             self::TO_DO => self::IN_PROGRESS,
             self::IN_PROGRESS => self::DONE
         ];
 
+        if(!isset($changeArray[$this->getId()])){
+            return false;
+        }
+
         return $changeArray[$this->getId()] === $status->getId();
     }
+
+    /**
+     * @param string $newStatus
+     */
+    private function throwExceptionIfStatusUnknown(string $newStatus): void
+    {
+        if (!in_array($newStatus, self::STATUSES)) {
+            throw new UnknownStatus();
+        }
+    }
+
 
 }

@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="config/bootstrap.php"
+         forceCoversAnnotation="true"
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -18,7 +19,7 @@
     <testsuites>
         <testsuite name="Unit tests">
             <directory suffix="Test.php">tests</directory>
-            <exclude>Controller</exclude>
+            <exclude>tests/Controller</exclude>
         </testsuite>
         <testsuite name="Functional tests">
             <directory suffix="ControllerTest.php">tests</directory>
@@ -33,6 +34,5 @@
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-        <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
     </listeners>
 </phpunit>

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Status\Status;
 use Doctrine\ORM\Mapping as ORM;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -58,7 +59,7 @@ class Task
     /**
      * @var Status
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status\Status")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      *
      * @SWG\Property(ref=@Model(type=Status::class), description="Status of the task")
@@ -116,14 +117,14 @@ class Task
     }
 
     /**
-     * @param Status $status
+     * @param Status $newStatus
      */
-    public function changeStatus(Status $status):void
+    public function changeStatus(Status $newStatus)
     {
-        if ($this->status->canBeChangedOn($status)) {
-            $this->status = $status;
+        if ($this->status->canBeChangedOn($newStatus)) {
+            $this->status = $newStatus;
         }
-    }
 
+    }
 
 }

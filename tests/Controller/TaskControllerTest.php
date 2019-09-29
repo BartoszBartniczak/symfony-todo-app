@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Status;
+use App\Entity\Status\Status;
 use App\Tests\RestApiTestCase;
 use Faker\Factory;
 use Faker\Generator;
