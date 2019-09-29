@@ -56,6 +56,7 @@ class Status
      * @param self $status
      *
      * @return bool
+     *
      */
     public function canBeChangedOn(self $status):bool{
         $changeArray = [

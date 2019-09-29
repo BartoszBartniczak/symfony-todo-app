@@ -14,16 +14,16 @@ nelmio_api_doc:
           produces:
             - application/json
           parameters:
-            - name: user
-              description: User to login
+            - name: username
+              description: Username
               in: body
               required: true
               schema:
                 type: object
                 properties:
-                  _username:
+                  username:
                     type: string
-                  _password:
+                  password:
                     type: string
           responses:
             '200':

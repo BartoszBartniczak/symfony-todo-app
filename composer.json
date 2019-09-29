@@ -24,7 +24,12 @@
     "symfony/yaml": "4.3.*"
   },
   "require-dev": {
+    "fzaninotto/faker": "^1.8",
+    "symfony/browser-kit": "4.3.*",
+    "symfony/css-selector": "4.3.*",
     "symfony/maker-bundle": "^1.12",
+    "symfony/panther": "^0.5.2",
+    "symfony/phpunit-bridge": "^4.3",
     "symfony/profiler-pack": "^1.0"
   },
   "config": {
