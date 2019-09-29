@@ -30,6 +30,7 @@ class TaskControllerTest extends RestApiTestCase
 
     /**
      * @covers \App\Controller\TaskController::tasks
+     * @covers \App\Controller\TaskController::__construct
      */
     public function testTasks()
     {

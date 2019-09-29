@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Status\Status;
 use App\Entity\Task;
+use App\Service\UuidGenerator;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +14,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
+
+    /**
+     * @var UuidGenerator
+     */
+    private $uuidGenerator;
+
+    public function __construct(UuidGenerator $uuidGenerator)
+    {
+        $this->uuidGenerator = $uuidGenerator;
+    }
+
     /**
      * List of the posts.
      *
@@ -75,7 +86,7 @@ class TaskController extends AbstractController
         /* @var Status $todo */
 
         $post = new Task(
-            Uuid::uuid4(),
+            $this->uuidGenerator->generate(),
             $params['title'] ?? '',
             $params['description'] ?? '',
             $todo
