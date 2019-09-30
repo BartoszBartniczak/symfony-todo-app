@@ -1,5 +1,3 @@
-language: php
-
 services:
   - docker
 
@@ -12,3 +10,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+
+script:
+  - echo 'test'
+
