@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-docker-compose exec php bin/console "${@:1}"
+docker-compose exec -T php bin/console "${@:1}"
 
 

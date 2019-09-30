@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
+bin/database/reset-test
 docker-compose exec php bin/phpunit --testdox --coverage-text --testsuite "Functional tests"
