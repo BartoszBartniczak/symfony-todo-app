@@ -10,7 +10,7 @@ This is just an demo app. It is used to be an API for Angular APP.
 * Postgres
 * JWT
 * Unit and functional tests
-
+* TravisCI
 
 ### Installation
 
