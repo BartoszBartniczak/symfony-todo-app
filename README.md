@@ -16,5 +16,9 @@ This is just an demo app. It is used to be an API for Angular APP.
 
 Run `bin/install` to setup the environment.
 
+### Available commands
+
+All commands are available as shell scripts in `bin` directory.
+
 ### API Docs
 Docs are available at http://todo-api.test/api/doc

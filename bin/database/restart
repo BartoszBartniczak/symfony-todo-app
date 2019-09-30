@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+bin/symfony-console doctrine:database:drop --force
+bin/symfony-console doctrine:database:create
+bin/symfony-console doctrine:migrations:migrate --no-interaction
+bin/symfony-console doctrine:fixture:load --no-interaction
