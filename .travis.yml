@@ -6,6 +6,7 @@ env:
 
 install:
   - netstat -anp tcp | grep 5432
+  - service postgresql stop
   - docker-compose pull
   - docker-compose build
 
