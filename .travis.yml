@@ -5,9 +5,10 @@ env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
 install:
-  -  docker-compose ps
-  - docker-compose up
-#  -  bin/install
+  - netstat -anp tcp | grep 5432
+  - docker-compose pull
+  - docker-compose build
+  - docker-compose start
 
 script:
   - echo 'test'
