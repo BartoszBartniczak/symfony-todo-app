@@ -16,7 +16,7 @@ class UuidGenerator
      * @return string
      */
     public function generate():string {
-        return Uuid::uuid4();
+        return Uuid::uuid4()->toString();
     }
 
 }

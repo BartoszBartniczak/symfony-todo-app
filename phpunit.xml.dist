@@ -22,13 +22,18 @@
             <exclude>tests/Controller</exclude>
         </testsuite>
         <testsuite name="Functional tests">
-            <directory suffix="ControllerTest.php">tests</directory>
+            <directory suffix="ControllerTest.php">tests/Controller</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
             <directory>src</directory>
+            <exclude>
+                <directory>src/DataFixtures</directory>
+                <directory>src/Migrations</directory>
+                <file>src/Kernel.php</file>
+            </exclude>
         </whitelist>
     </filter>
 
