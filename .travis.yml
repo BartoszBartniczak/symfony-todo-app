@@ -12,5 +12,5 @@ script:
   - bin/tests/test
 
 after_success:
-  - travis_retry docker-compose exec php vendor/bin/coveralls -v
+  - travis_retry docker-compose exec php vendor/bin/php-coveralls -v
 
