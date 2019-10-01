@@ -3,4 +3,5 @@
 docker-compose build
 
 bin/start
+bin/composer install
 bin/symfony-console doctrine:migrations:migrate --no-interaction

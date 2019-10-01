@@ -5,13 +5,9 @@ env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
 install:
-  - netstat -anp tcp | grep 5432
   - sudo service postgresql stop
-  - docker-compose pull
-  - docker-compose build
+  - bin/install
 
 script:
-  - echo 'test'
-  - ls -al
   - docker-compose run php ls -al
 
