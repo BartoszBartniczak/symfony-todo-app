@@ -9,5 +9,5 @@ install:
   - bin/install
 
 script:
-  - docker-compose run php ls -al
+  - bin/tests/test
 
