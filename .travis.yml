@@ -2,9 +2,9 @@ services:
   - docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.24.1
 
-install:
+before_install:
   - sudo service postgresql stop
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -17,6 +17,8 @@ install:
   - docker-compose --version
   - docker-compose exec --help
   - docker-compose run --help
+
+#install:
 #  - bin/install
 #
 #script:
