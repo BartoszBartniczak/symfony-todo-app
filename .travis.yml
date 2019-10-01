@@ -5,10 +5,11 @@ env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
 install:
-  -  bin/install
+  -  docker-compose ps
+#  -  bin/install
 
 script:
   - echo 'test'
   - ls -al
-  - docker-compose exec php ls -al
+#  - docker-compose exec php ls -al
 
