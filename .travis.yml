@@ -3,11 +3,13 @@ services:
 
 install:
   - sudo service postgresql stop
-  - bin/install
-
-script:
-  - bin/tests/test
-
-after_success:
-  - travis_retry docker-compose exec -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" -e TRAVIS_BRANCH="$TRAVIS_BRANCH" -e TRAVIS="$TRAVIS" php vendor/bin/php-coveralls -v
+  - docker-compose --version
+  - docker-compose exec --help
+#  - bin/install
+#
+#script:
+#  - bin/tests/test
+#
+#after_success:
+#  - travis_retry docker-compose exec -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" -e TRAVIS_BRANCH="$TRAVIS_BRANCH" -e TRAVIS="$TRAVIS" php vendor/bin/php-coveralls -v
 
