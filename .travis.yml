@@ -8,10 +8,9 @@ install:
   - netstat -anp tcp | grep 5432
   - docker-compose pull
   - docker-compose build
-  - docker-compose start
 
 script:
   - echo 'test'
   - ls -al
-#  - docker-compose exec php ls -al
+  - docker-compose run php ls -al
 
