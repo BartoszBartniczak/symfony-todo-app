@@ -1,9 +1,6 @@
 services:
   - docker
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
-
 install:
   - sudo service postgresql stop
   - bin/install
