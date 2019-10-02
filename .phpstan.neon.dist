@@ -1,0 +1,12 @@
+parameters:
+	excludes_analyse:
+		- %currentWorkingDirectory%/src/Migrations/*
+	doctrine:
+		objectManagerLoader: %currentWorkingDirectory%/tests/object-manager.php
+	symfony:
+		container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+services:
+	-
+		class: PHPStan\ObjectManagerDynamicMethodReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension

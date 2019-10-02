@@ -1,11 +1,12 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
- * User: bartosz
+ * User: bartosz.
  */
 
 namespace App\DataFixtures;
-
 
 use App\Entity\Status\Status;
 use App\Entity\Task;
@@ -42,13 +43,11 @@ class TaskFixtures extends Fixture
         $inProgress = new Task($this->uuidGenerator->generate(), $this->faker->realText(50), $this->faker->realText(300), $statusInProgress);
         $manager->persist($inProgress);
 
-        $statusDone =$manager->merge(new Status(Status::DONE));
+        $statusDone = $manager->merge(new Status(Status::DONE));
         $done = new Task($this->uuidGenerator->generate(), $this->faker->realText(50), $this->faker->realText(300), $statusDone);
         $manager->merge($done->getStatus());
         $manager->persist($done);
 
         $manager->flush();
     }
-
-
 }

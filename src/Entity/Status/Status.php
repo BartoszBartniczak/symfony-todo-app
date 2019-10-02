@@ -1,50 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Status;
 
-use App\Entity\Status\Exception\InvalidState;
 use App\Entity\Status\Exception\UnknownStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Class Status
- *
- * @package App\Entity
+ * Class Status.
  *
  * @ORM\Entity()
  */
 class Status
 {
-    const TO_DO = 'TO_DO';
-    const IN_PROGRESS = 'IN_PROGRESS';
-    const DONE = 'DONE';
+    public const TO_DO = 'TO_DO';
+    public const IN_PROGRESS = 'IN_PROGRESS';
+    public const DONE = 'DONE';
 
-    const STATUSES = [
+    private const STATUSES = [
         self::TO_DO,
         self::IN_PROGRESS,
-        self::DONE
+        self::DONE,
     ];
 
     /**
-     * Status of the job
+     * Status of the job.
      *
      * @var string
      *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\Column(name="id", type="string", length=256)
+     * @ORM\Column(name="id",               type="string", length=256)
      *
      * @SWG\Property(type="string")
      *
      * @Groups({"all"})
-     *
      */
     private $id;
 
     /**
      * Status constructor.
+     *
      * @param string $id
      */
     public function __construct(string $id)
@@ -66,16 +65,15 @@ class Status
      * @param self $status
      *
      * @return bool
-     *
      */
     public function canBeChangedOn(Status $status): bool
     {
         $changeArray = [
             self::TO_DO => self::IN_PROGRESS,
-            self::IN_PROGRESS => self::DONE
+            self::IN_PROGRESS => self::DONE,
         ];
 
-        if(!isset($changeArray[$this->getId()])){
+        if (!isset($changeArray[$this->getId()])) {
             return false;
         }
 
@@ -84,13 +82,13 @@ class Status
 
     /**
      * @param string $newStatus
+     *
+     * @return void
      */
     private function throwExceptionIfStatusUnknown(string $newStatus): void
     {
-        if (!in_array($newStatus, self::STATUSES)) {
+        if (!in_array($newStatus, self::STATUSES, true)) {
             throw new UnknownStatus();
         }
     }
-
-
 }

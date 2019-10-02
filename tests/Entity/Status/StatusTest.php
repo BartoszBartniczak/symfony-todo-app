@@ -1,7 +1,9 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
- * User: bartosz
+ * User: bartosz.
  */
 
 namespace App\Tests\Entity\Status;
@@ -10,15 +12,19 @@ use App\Entity\Status\Exception\UnknownStatus;
 use App\Entity\Status\Status;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class StatusTest extends TestCase
 {
-
     /**
      * @covers \App\Entity\Status\Status::__construct
      * @covers \App\Entity\Status\Status::getId
      * @covers \App\Entity\Status\Status::throwExceptionIfStatusUnknown
      */
-    public function testConstructorAndGetters(){
+    public function testConstructorAndGetters()
+    {
         $status = new Status(Status::TO_DO);
         $this->assertSame(Status::TO_DO, $status->getId());
     }
@@ -27,7 +33,8 @@ class StatusTest extends TestCase
      * @covers \App\Entity\Status\Status::__construct
      * @covers \App\Entity\Status\Status::throwExceptionIfStatusUnknown
      */
-    public function testConstructorThrowsExceptionIfStatusIsUnknown(){
+    public function testConstructorThrowsExceptionIfStatusIsUnknown()
+    {
         $this->expectException(UnknownStatus::class);
 
         new Status('ZZZ');
@@ -36,7 +43,8 @@ class StatusTest extends TestCase
     /**
      * @covers \App\Entity\Status\Status::canBeChangedOn
      */
-    public function testCanBeChangedOn(){
+    public function testCanBeChangedOn()
+    {
         $todo = new Status(Status::TO_DO);
         $this->assertTrue($todo->canBeChangedOn(new Status(Status::IN_PROGRESS)));
         $this->assertFalse($todo->canBeChangedOn(new Status(Status::DONE)));

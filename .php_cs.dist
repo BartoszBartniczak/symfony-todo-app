@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('docker')
+    ->exclude('var')
     ->in(__DIR__)
 ;
 

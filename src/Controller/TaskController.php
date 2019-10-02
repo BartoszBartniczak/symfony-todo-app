@@ -1,25 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Status\Status;
 use App\Entity\Task;
 use App\Service\UuidGenerator;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Swagger\Annotations as SWG;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class TaskController.
+ */
 class TaskController extends AbstractController
 {
-
     /**
      * @var UuidGenerator
      */
     private $uuidGenerator;
 
+    /**
+     * TaskController constructor.
+     *
+     * @param UuidGenerator $uuidGenerator
+     */
     public function __construct(UuidGenerator $uuidGenerator)
     {
         $this->uuidGenerator = $uuidGenerator;
@@ -50,7 +59,11 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Creates new task
+     * Creates new task.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -62,7 +75,7 @@ class TaskController extends AbstractController
      *          format="application/json",
      *          @SWG\Schema(
      *              type="object",
-     *              @SWG\Property(property="title", type="string", example="First job"),
+     *              @SWG\Property(property="title",       type="string", example="First job"),
      *              @SWG\Property(property="description", type="string", example="Job description"),
      *          )
      *      ),
@@ -73,23 +86,20 @@ class TaskController extends AbstractController
      *
      *     @Model(type="App\Entity\Task"),
      * )
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function createTask(Request $request): JsonResponse
     {
-        $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $params = json_decode((string) $request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        $todo = new Status(Status::TO_DO);
-        $todo = $this->getDoctrine()->getManager()->merge($todo);
-        /* @var Status $todo */
+        $todoTask = new Status(Status::TO_DO);
+        $todoTask = $this->getDoctrine()->getManager()->merge($todoTask);
+        /* @var Status $todoTask */
 
         $post = new Task(
             $this->uuidGenerator->generate(),
-            $params['title'] ?? '',
-            $params['description'] ?? '',
-            $todo
+            ($params['title'] ?? ''),
+            ($params['description'] ?? ''),
+            $todoTask
         );
 
         $this->getDoctrine()->getManager()->persist($post);
@@ -99,7 +109,12 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Updates existing task
+     * Updates existing task.
+     *
+     * @param Request $request
+     * @param string  $uuid
+     *
+     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -111,7 +126,7 @@ class TaskController extends AbstractController
      *          format="application/json",
      *          @SWG\Schema(
      *              type="object",
-     *              @SWG\Property(property="title", type="string", example="First job"),
+     *              @SWG\Property(property="title",       type="string", example="First job"),
      *              @SWG\Property(property="description", type="string", example="Job description"),
      *          )
      *      ),
@@ -129,14 +144,10 @@ class TaskController extends AbstractController
      *     response="204",
      *     description="Task doesnt exist"
      * )
-     *
-     * @param Request $request
-     * @param string $uuid
-     * @return JsonResponse
      */
     public function updateTask(Request $request, string $uuid): JsonResponse
     {
-        $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $params = json_decode((string) $request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         $task = $this->getDoctrine()->getRepository(Task::class)->find($uuid);
 
@@ -147,6 +158,7 @@ class TaskController extends AbstractController
         if (isset($params['title'])) {
             $task->changeTitle($params['title']);
         }
+
         if (isset($params['description'])) {
             $task->changeDescription($params['description']);
         }
@@ -158,7 +170,11 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Returns task
+     * Returns task.
+     *
+     * @param string $uuid
+     *
+     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -175,9 +191,6 @@ class TaskController extends AbstractController
      *     response="204",
      *     description="Task doesnt exist"
      * )
-     *
-     * @param string $uuid
-     * @return JsonResponse
      */
     public function task(string $uuid): JsonResponse
     {
@@ -191,6 +204,10 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param string $uuid
+     * @param string $newStatusId
+     *
+     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -203,19 +220,14 @@ class TaskController extends AbstractController
      *     response="200",
      *     description="Changes status of the task",
      *
-     *     @SWG\Parameter(name="uuid", type="string", format="uuid"),
+     *     @SWG\Parameter(name="uuid",        type="string", format="uuid"),
      *     @SWG\Parameter(name="newStatusId", type="string"),
      *
      *     @Model(type="App\Entity\Task")
      * )
-     *
-     * @param string $uuid
-     * @param string $newStatusId
-     * @return JsonResponse
      */
     public function changeStatus(string $uuid, string $newStatusId): JsonResponse
     {
-
         $task = $this->getDoctrine()->getRepository(Task::class)->find($uuid);
         /* @var Task $task */
 
@@ -232,8 +244,6 @@ class TaskController extends AbstractController
         $this->getDoctrine()->getManager()->persist($task);
         $this->getDoctrine()->getManager()->flush();
 
-
         return $this->json($task, Response::HTTP_OK, [], ['groups' => 'all']);
     }
-
 }

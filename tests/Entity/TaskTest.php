@@ -1,7 +1,9 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
- * User: bartosz
+ * User: bartosz.
  */
 
 namespace App\Tests\Entity;
@@ -10,20 +12,24 @@ use App\Entity\Status\Status;
 use App\Entity\Task;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TaskTest extends TestCase
 {
-
     /**
      * @covers \App\Entity\Task::__construct
-     * @covers \App\Entity\Task::getId
-     * @covers \App\Entity\Task::getTitle
-     * @covers \App\Entity\Task::getDescription
-     * @covers \App\Entity\Task::getStatus
-     * @covers \App\Entity\Task::changeTitle
      * @covers \App\Entity\Task::changeDescription
      * @covers \App\Entity\Task::changeStatus
+     * @covers \App\Entity\Task::changeTitle
+     * @covers \App\Entity\Task::getDescription
+     * @covers \App\Entity\Task::getId
+     * @covers \App\Entity\Task::getStatus
+     * @covers \App\Entity\Task::getTitle
      */
-    public function testConstructorGettersAndSetters(){
+    public function testConstructorGettersAndSetters()
+    {
         $status = new Status(Status::TO_DO);
         $task = new Task('fd229975-bc53-4646-836f-c700e1bcf147', 'Title', 'description', $status);
 
@@ -42,5 +48,4 @@ class TaskTest extends TestCase
         $task->changeStatus($newStatus);
         $this->assertSame($newStatus, $task->getStatus());
     }
-
 }

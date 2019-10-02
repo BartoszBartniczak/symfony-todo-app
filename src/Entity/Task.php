@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Status\Status;
@@ -11,12 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
- *
  */
 class Task
 {
-
     /**
+     * @var string
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="guid")
@@ -31,6 +33,8 @@ class Task
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      *
      * @SWG\Property(type="string", description="Task title")
@@ -44,6 +48,8 @@ class Task
     private $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      *
      * @SWG\Property(type="string", description="Task description")
@@ -60,7 +66,7 @@ class Task
      * @var Status
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Status\Status")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="status_id",                       referencedColumnName="id")
      *
      * @SWG\Property(ref=@Model(type=Status::class), description="Status of the task")
      *
@@ -70,9 +76,11 @@ class Task
 
     /**
      * Post constructor.
-     * @param $id
-     * @param $title
-     * @param $description
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $description
+     * @param Status $status
      */
     public function __construct(string $id, string $title, string $description, Status $status)
     {
@@ -82,27 +90,45 @@ class Task
         $this->status = $status;
     }
 
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
-
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     *
+     * @return void
+     */
     public function changeTitle(string $title): void
     {
         $this->title = $title;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     *
+     * @return void
+     */
     public function changeDescription(string $description): void
     {
         $this->description = $description;
@@ -118,13 +144,13 @@ class Task
 
     /**
      * @param Status $newStatus
+     *
+     * @return void
      */
-    public function changeStatus(Status $newStatus)
+    public function changeStatus(Status $newStatus): void
     {
         if ($this->status->canBeChangedOn($newStatus)) {
             $this->status = $newStatus;
         }
-
     }
-
 }

@@ -1,15 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
- * User: bartosz
+ * User: bartosz.
  */
 
 namespace App\Entity\Status\Exception;
 
+use App\Exception\InvalidArgument;
 
-use App\Exception\InvalidArgumentException;
-
-class UnknownStatus extends InvalidArgumentException
+/**
+ * Class UnknownStatus.
+ */
+class UnknownStatus extends InvalidArgument
 {
-
 }

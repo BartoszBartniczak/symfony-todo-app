@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
 use App\Entity\Status\Status;
@@ -11,8 +13,11 @@ use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\VarDumper\VarDumper;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TaskControllerTest extends RestApiTestCase
 {
     /**
@@ -39,9 +44,9 @@ class TaskControllerTest extends RestApiTestCase
         $this->faker = Factory::create();
         $kernel = self::bootKernel();
         $this->entityManager = $kernel->getContainer()->get('doctrine')
-            ->getManager();
+            ->getManager()
+        ;
         $this->taskRepository = $this->entityManager->getRepository(Task::class);
-
     }
 
     protected function tearDown()
@@ -50,8 +55,8 @@ class TaskControllerTest extends RestApiTestCase
     }
 
     /**
-     * @covers \App\Controller\TaskController::tasks
      * @covers \App\Controller\TaskController::__construct
+     * @covers \App\Controller\TaskController::tasks
      */
     public function testTasks()
     {
@@ -71,7 +76,6 @@ class TaskControllerTest extends RestApiTestCase
      */
     public function testCreateTask()
     {
-
         $title = $this->faker->realText(100);
         $description = $this->faker->realText(300);
 
@@ -84,11 +88,11 @@ class TaskControllerTest extends RestApiTestCase
             ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'title' => $title,
-                    'description' => $description,
+                'description' => $description,
             ])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
         $this->assertJson($client->getResponse()->getContent());
 
         $decodedJson = $this->jsonDecode($client->getResponse());
@@ -100,7 +104,6 @@ class TaskControllerTest extends RestApiTestCase
         $task = $this->taskRepository->find($decodedJson['id']);
         $this->assertSame($title, $task->getTitle());
         $this->assertSame($description, $task->getDescription());
-
     }
 
     /**
@@ -114,7 +117,7 @@ class TaskControllerTest extends RestApiTestCase
         $client = static::createAuthenticatedClient();
         $client->request(
             Request::METHOD_PUT,
-            "/tasks/" . self::$taskId,
+            '/tasks/' . self::$taskId,
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -124,7 +127,7 @@ class TaskControllerTest extends RestApiTestCase
             ])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertJson($client->getResponse()->getContent());
 
         $decodedJson = $this->jsonDecode($client->getResponse());
@@ -146,7 +149,7 @@ class TaskControllerTest extends RestApiTestCase
         $client = static::createAuthenticatedClient();
         $client->request(
             Request::METHOD_GET,
-            "/tasks/" . self::$taskId
+            '/tasks/' . self::$taskId
         );
 
         $this->assertResponseIsSuccessful();

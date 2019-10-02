@@ -5,6 +5,13 @@ source bin/params
 clear
 
 echo -e "-------------------------------------------------------------------------"
-echo -e "${FONT_BOLD}PHPCsFixer Report${FONT_NORMAL}"
+echo -e "${FONT_BOLD}PHPCodeSniffer Fix{FONT_NORMAL}"
 echo -e "-------------------------------------------------------------------------"
-docker-compose run --rm ${PHP_SERVICE} vendor/bin/php-cs-fixer fix --config=.php_cs.dist --show-progress=dots --allow-risky=yes --verbose
+docker-compose run --rm php vendor/bin/phpcs --config-set colors 1 >/dev/null
+docker-compose run --rm php vendor/bin/phpcbf -p src
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHPCsFixer Fix${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/php-cs-fixer fix --config=.php_cs.dist --show-progress=dots --allow-risky=yes --verbose
+

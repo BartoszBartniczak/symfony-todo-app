@@ -9,6 +9,9 @@
     <description>
     </description>
 
+    <exclude-pattern>src/Migrations</exclude-pattern>
+    <exclude-pattern>src/DataFixtures</exclude-pattern>
+
     <rule ref="rulesets/cleancode.xml"/>
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/controversial.xml"/>

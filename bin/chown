@@ -8,7 +8,6 @@ echo -e "\n"
 
 echo -e "${COLOR_GREEN}${CHECKMARK} Changing file owner${COLOR_NO_COLOR}"
 docker-compose run --rm --user=root php chown -R www-data:www-data *
-docker-compose run --rm --user=root php chown -R www-data:www-data .[^.]*
 
 echo -e "${COLOR_GREEN}${CHECKMARK} Changing chmod for directories${COLOR_NO_COLOR}"
 docker-compose run --rm --user=root php find . -type d -exec chmod 775 {} \;

@@ -1,11 +1,12 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
- * User: bartosz
+ * User: bartosz.
  */
 
 namespace App\DataFixtures;
-
 
 use App\Entity\User;
 use App\Service\UuidGenerator;
@@ -20,7 +21,7 @@ class UserFixtures extends Fixture
      */
     private $passwordEncoder;
     /**
-     * @var
+     * @var UuidGenerator
      */
     private $uuidGenerator;
 
@@ -39,6 +40,4 @@ class UserFixtures extends Fixture
         $manager->persist($user);
         $manager->flush();
     }
-
-
 }

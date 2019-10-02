@@ -21,26 +21,18 @@
         <exclude name="PEAR.Commenting.FunctionComment.MissingParamTag"/>
         <exclude name="PEAR.Commenting.ClassComment.MissingPackageTag"/>
         <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+        <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        <exclude name="Generic.Commenting.DocComment.TagsNotGrouped" />
     </rule>
     <rule ref="Squiz">
         <exclude name="Squiz.Files.FileExtension.ClassFound"/>
-        <exclude name="Squiz.Commenting.FileComment"/>
-        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
-        <exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing"/>
+        <exclude name="Squiz.Commenting"/>
         <exclude name="Squiz.WhiteSpace"/>
-        <exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
-        <exclude name="Squiz.Commenting.InlineComment.DocBlock"/>
-        <exclude name="Squiz.Commenting.FunctionComment.EmptyThrows"/>
-        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
-        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
-        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
-        <exclude name="Squiz.Commenting.BlockComment.SingleLine"/>
         <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
-        <exclude name="Squiz.Commenting.VariableComment.IncorrectVarType"/>
         <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
-        <exclude name="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber"/>
         <exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
         <exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
     </rule>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
         <exclude
@@ -67,5 +59,14 @@
         <exclude name="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse"/>
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException"/>
         <exclude name="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic" />
+        <exclude name="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed" />
+        <exclude name="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces" />
+        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall.MissingTrailingComma"/>
+        <exclude name="SlevomatCodingStandard.Classes.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse"/>
     </rule>
+    <exclude-pattern>src/Migrations</exclude-pattern>
+    <exclude-pattern>src/DataFixtures</exclude-pattern>
+    <exclude-pattern>src/Kernel.php</exclude-pattern>
 </ruleset>
+

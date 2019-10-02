@@ -7,7 +7,7 @@ clear
 echo -e "-------------------------------------------------------------------------"
 echo -e "${FONT_BOLD}PHPStan Report${FONT_NORMAL}"
 echo -e "-------------------------------------------------------------------------"
-docker-compose run --rm php vendor/bin/phpstan analyse src --level=max
+docker-compose run --rm php vendor/bin/phpstan analyse --level=max --configuration=.phpstan.neon.dist src
 
 echo -e "-------------------------------------------------------------------------"
 echo -e "${FONT_BOLD}PHPCodeSniffer Report${FONT_NORMAL}"
@@ -24,3 +24,8 @@ echo -e "-----------------------------------------------------------------------
 echo -e "${FONT_BOLD}PHPMessDetector Report${FONT_NORMAL}"
 echo -e "-------------------------------------------------------------------------"
 docker-compose run --rm php vendor/bin/phpmd src/ text .phpmd.xml.dist
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHP Copy/Paste Detector Report${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/phpcpd --fuzzy --progress src

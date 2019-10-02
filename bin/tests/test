@@ -2,3 +2,4 @@
 
 bin/database/reset-test
 docker-compose exec php bin/phpunit --testdox --coverage-text
+bin/qa
