@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    const ROLE_USER = 'ROLE_USER';
     /**
      * @var string
      *
@@ -67,7 +68,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -97,6 +98,8 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
+     *
+     * @codeCoverageIgnore
      */
     public function eraseCredentials()
     {

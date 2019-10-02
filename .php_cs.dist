@@ -1,0 +1,27 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('docker')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@PSR1' => true,
+        '@PSR2' => true,
+        '@PhpCsFixer' => true,
+        '@Symfony'=>true,
+        'yoda_style' => false,
+        'ordered_class_elements' => false,
+        'increment_style' => [
+            'style' => 'post'
+            ],
+        'declare_strict_types' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
+        'single_line_comment_style' => false,
+        'phpdoc_no_empty_return' => false,
+        'concat_space' => false,
+    ])
+    ->setFinder($finder)
+;

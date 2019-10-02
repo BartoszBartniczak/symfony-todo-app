@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+source bin/params
+
+clear
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHPStan Report${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/phpstan analyse src --level=max
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHPCodeSniffer Report${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/phpcs --config-set colors 1 >/dev/null
+docker-compose run --rm php vendor/bin/phpcs -p -s src
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHPCsFixer Report${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/php-cs-fixer fix --config=.php_cs.dist --show-progress=dots --allow-risky=yes --verbose  --dry-run
+
+echo -e "-------------------------------------------------------------------------"
+echo -e "${FONT_BOLD}PHPMessDetector Report${FONT_NORMAL}"
+echo -e "-------------------------------------------------------------------------"
+docker-compose run --rm php vendor/bin/phpmd src/ text .phpmd.xml.dist
