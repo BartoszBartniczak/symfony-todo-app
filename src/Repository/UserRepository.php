@@ -20,8 +20,6 @@ class UserRepository extends ServiceEntityRepository
 {
     /**
      * UserRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

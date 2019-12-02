@@ -45,10 +45,6 @@ class User implements UserInterface
 
     /**
      * User constructor.
-     *
-     * @param string $id
-     * @param string $username
-     * @param string $password
      */
     public function __construct(string $id, string $username, string $password)
     {
@@ -57,9 +53,6 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    /**
-     * @return string|null
-     */
     public function getId(): ?string
     {
         return $this->id;
@@ -69,8 +62,6 @@ class User implements UserInterface
      * A visual identifier that represents this user.
      *
      * @see UserInterface
-     *
-     * @return string
      */
     public function getUsername(): string
     {
@@ -93,8 +84,6 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -102,8 +91,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $password
-     *
      * @return $this
      */
     public function setPassword(string $password): self
@@ -115,8 +102,6 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
-     *
-     * @return string|null
      */
     public function getSalt(): ?string
     {
@@ -126,8 +111,6 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
-     *
-     * @return void
      *
      * @codeCoverageIgnore
      */

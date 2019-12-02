@@ -43,8 +43,6 @@ class Status
 
     /**
      * Status constructor.
-     *
-     * @param string $id
      */
     public function __construct(string $id)
     {
@@ -53,9 +51,6 @@ class Status
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
@@ -63,8 +58,6 @@ class Status
 
     /**
      * @param self $status
-     *
-     * @return bool
      */
     public function canBeChangedOn(Status $status): bool
     {
@@ -80,11 +73,6 @@ class Status
         return $changeArray[$this->getId()] === $status->getId();
     }
 
-    /**
-     * @param string $newStatus
-     *
-     * @return void
-     */
     private function throwExceptionIfStatusUnknown(string $newStatus): void
     {
         if (!in_array($newStatus, self::STATUSES, true)) {

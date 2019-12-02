@@ -26,8 +26,6 @@ class TaskController extends AbstractController
 
     /**
      * TaskController constructor.
-     *
-     * @param UuidGenerator $uuidGenerator
      */
     public function __construct(UuidGenerator $uuidGenerator)
     {
@@ -48,8 +46,6 @@ class TaskController extends AbstractController
      *     @SWG\Items(ref=@Model(type="App\Entity\Task"))
      *     )
      * )
-     *
-     * @return JsonResponse
      */
     public function tasks(): JsonResponse
     {
@@ -60,10 +56,6 @@ class TaskController extends AbstractController
 
     /**
      * Creates new task.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -110,11 +102,6 @@ class TaskController extends AbstractController
 
     /**
      * Updates existing task.
-     *
-     * @param Request $request
-     * @param string  $uuid
-     *
-     * @return JsonResponse
      *
      * @SWG\Tag(name="Task")
      *
@@ -172,10 +159,6 @@ class TaskController extends AbstractController
     /**
      * Returns task.
      *
-     * @param string $uuid
-     *
-     * @return JsonResponse
-     *
      * @SWG\Tag(name="Task")
      *
      * @SWG\Response(
@@ -204,11 +187,6 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @param string $uuid
-     * @param string $newStatusId
-     *
-     * @return JsonResponse
-     *
      * @SWG\Tag(name="Task")
      *
      * @SWG\Response(

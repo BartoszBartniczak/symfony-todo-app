@@ -76,11 +76,6 @@ class Task
 
     /**
      * Post constructor.
-     *
-     * @param string $id
-     * @param string $title
-     * @param string $description
-     * @param Status $status
      */
     public function __construct(string $id, string $title, string $description, Status $status)
     {
@@ -90,63 +85,36 @@ class Task
         $this->status = $status;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     *
-     * @return void
-     */
     public function changeTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return void
-     */
     public function changeDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return Status
-     */
     public function getStatus(): Status
     {
         return $this->status;
     }
 
-    /**
-     * @param Status $newStatus
-     *
-     * @return void
-     */
     public function changeStatus(Status $newStatus): void
     {
         if ($this->status->canBeChangedOn($newStatus)) {

@@ -45,8 +45,6 @@ abstract class RestApiTestCase extends PantherTestCase
     }
 
     /**
-     * @param Response $response
-     *
      * @return mixed
      */
     protected function jsonDecode(Response $response)
